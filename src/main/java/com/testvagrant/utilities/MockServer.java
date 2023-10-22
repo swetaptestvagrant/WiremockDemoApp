@@ -1,4 +1,4 @@
-package com.testvagrant.utilies;
+package com.testvagrant.utilities;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -8,21 +8,22 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 
 public final class MockServer {
 
-    private MockServer(){}
+    private MockServer() {}
     public static WireMockServer startWireMockServer() {
         // Create a WireMock server instance as a proxy
-        WireMockServer wireMockServer = new WireMockServer(wireMockConfig().bindAddress("localhost").port(8080).proxyVia(ProxySettings.NO_PROXY));
+        WireMockServer wireMockServer = new WireMockServer(wireMockConfig().bindAddress("localhost")
+                .port(8080).proxyVia(ProxySettings.NO_PROXY));
         wireMockServer.start();
         configureWireMock();
         return wireMockServer;
     }
 
     public static void configureWireMock() {
-        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/posts/1"))
+        WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/users/1"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
-                        .withBody("{\"userId\": 1, \"id\": 1, \"title\": \"mocked title\", \"body\": \"mocked body\"}")
+                        .withBody("{\"userId\": 1, \"id\": 1, \"title\": \"Otaku 2023: Mocking API behaviour\", \"body\": \"Welcome to Otaku 2023\"}")
                 )
         );
     }

@@ -10,13 +10,12 @@ import org.testng.annotations.Test;
 
 import static org.apache.http.impl.client.HttpClients.createDefault;
 
-public class TypeCodeMockTest extends BaseTest{
+public class WiremockDemo extends BaseTest{
 
     @Test
-    public void TypeCodePostMockTest(){
-        // Your application logic here
+    public void WiremockDemoTest() {
         HttpClient httpClient = createDefault();
-        HttpGet httpGet = new HttpGet("http://jsonplaceholder.typicode.com/posts/1");
+        HttpGet httpGet = new HttpGet("http://reqres.in/api/users/1");
 
         // Configure the HTTP client to use WireMock as a proxy
         HttpHost proxy = new HttpHost("localhost", 8080); // Assuming WireMock is running on localhost:8080
@@ -29,8 +28,8 @@ public class TypeCodeMockTest extends BaseTest{
             HttpResponse response = httpClient.execute(httpGet);
             String responseBody = EntityUtils.toString(response.getEntity());
 
-            System.out.println("Response from External API:");
-            System.out.println(responseBody);
+            System.out.println(String.format("\n Response from API %s:", httpGet.getURI()));
+            System.out.println(responseBody + "\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
