@@ -18,7 +18,7 @@ public class WiremockDemo extends BaseTest {
     @Test
     public void WiremockDemoTest() throws Exception {
 
-        //HTTP client and we are performing GET method
+        //HTTP client and GET method
         HttpClient httpClient = createDefault();
         HttpGet httpGet = new HttpGet("http://reqres.in/api/users/1");
 
@@ -29,10 +29,8 @@ public class WiremockDemo extends BaseTest {
                 .build();
         httpGet.setConfig(config);
 
-        //Execute the HTTP GET request and fetch the response
+        //Execute the HTTP GET request and fetch the mocked response instead of actual response
         HttpResponse response = httpClient.execute(httpGet);
-
-        //Get the mocked response
         String responseBody = EntityUtils.toString(response.getEntity());
 
         //Assert the mocked response with the expected response
