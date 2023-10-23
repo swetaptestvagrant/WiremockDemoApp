@@ -9,11 +9,13 @@ public class BaseTest {
     WireMockServer wireMockServer;
     protected BaseTest() {}
 
+    //Start the mock server
     @BeforeMethod
     public void init(){
         wireMockServer = MockServer.startWireMockServer();
     }
 
+    //Stop the mock server
     @AfterMethod
     public void tearDown(){
         wireMockServer.stop();

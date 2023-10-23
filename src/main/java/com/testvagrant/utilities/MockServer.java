@@ -7,6 +7,7 @@ import com.github.tomakehurst.wiremock.common.ProxySettings;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 public final class MockServer {
+
     public static String mockResponse = "{\n" +
             "  \"error\": {\n" +
             "    \"code\": 429,\n" +
