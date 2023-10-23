@@ -7,6 +7,14 @@ import com.github.tomakehurst.wiremock.common.ProxySettings;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 public final class MockServer {
+    public static String mockResponse = "{\n" +
+            "  \"error\": {\n" +
+            "    \"code\": 429,\n" +
+            "    \"message\": \"Too Many Requests: You have exceeded the rate limit. Please try again after 1 hour.\",\n" +
+            "    \"details\": \"You have made 500 requests within the past 10 minutes. The rate limit is 100 requests per 10 minutes. Please reduce the frequency of your requests.\",\n" +
+            "    \"retry_after\": 3600\n" +
+            "  }\n" +
+            "}";
 
     private MockServer() {}
     public static WireMockServer startWireMockServer() {
@@ -21,9 +29,9 @@ public final class MockServer {
     public static void configureWireMock() {
         WireMock.stubFor(WireMock.get(WireMock.urlEqualTo("/api/users/1"))
                 .willReturn(WireMock.aResponse()
-                        .withStatus(200)
+                        .withStatus(429)
                         .withHeader("Content-Type", "application/json")
-                        .withBody("{\"userId\": 1, \"id\": 1, \"title\": \"Otaku 2023: Mocking API behaviour\", \"body\": \"Welcome to Otaku 2023\"}")
+                        .withBody(mockResponse)
                 )
         );
     }

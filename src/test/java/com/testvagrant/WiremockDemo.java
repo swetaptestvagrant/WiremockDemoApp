@@ -6,14 +6,16 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.testvagrant.utilities.MockServer.mockResponse;
 import static org.apache.http.impl.client.HttpClients.createDefault;
 
-public class WiremockDemo extends BaseTest{
+public class WiremockDemo extends BaseTest {
 
     @Test
-    public void WiremockDemoTest() {
+    public void WiremockDemoTest() throws Exception {
         HttpClient httpClient = createDefault();
         HttpGet httpGet = new HttpGet("http://reqres.in/api/users/1");
 
@@ -24,14 +26,12 @@ public class WiremockDemo extends BaseTest{
                 .build();
         httpGet.setConfig(config);
 
-        try {
-            HttpResponse response = httpClient.execute(httpGet);
-            String responseBody = EntityUtils.toString(response.getEntity());
+        HttpResponse response = httpClient.execute(httpGet);
+        String responseBody = EntityUtils.toString(response.getEntity());
 
-            System.out.println(String.format("\n Response from API %s:", httpGet.getURI()));
-            System.out.println(responseBody + "\n");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Assert.assertEquals(responseBody, mockResponse,
+                "The response should return the mocked response instead of the actual response");
+        System.out.println(String.format("\n Response from API %s:", httpGet.getURI()));
+        System.out.println(responseBody + "\n");
     }
 }
